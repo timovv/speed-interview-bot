@@ -101,6 +101,10 @@ export const getQueue = (guild: Guild) => {
   return queues[guild.id];
 };
 
-export const updateQueue = (guild: Guild, queue: UserQueue) => {
-  queues[guild.id] = queue;
+export const updateQueue = (
+  guild: Guild,
+  update: UserQueue | ((originalQueue: UserQueue) => UserQueue)
+) => {
+  queues[guild.id] =
+    update instanceof Function ? update(queues[guild.id]) : update;
 };

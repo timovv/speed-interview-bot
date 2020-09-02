@@ -38,8 +38,9 @@ export const startBot = async (token: string): Promise<Client> => {
       previous.member &&
       getQueue(next.guild).queuedUsers.includes(previous.member.id)
     ) {
-      const queue = getQueue(next.guild);
-      updateQueue(next.guild, dequeueUser(queue, previous.member.id));
+      updateQueue(next.guild, (queue) =>
+        previous.member ? dequeueUser(queue, previous.member.id) : queue
+      );
       const dm = await previous.member.createDM();
       await dm.send(
         `You have been removed from the queue. Thanks for coming along!`
@@ -64,7 +65,7 @@ export const startBot = async (token: string): Promise<Client> => {
             )
         )
         .forEach((member) =>
-          updateQueue(guild, enqueueUser(getQueue(guild), member.id)[0])
+          updateQueue(guild, (queue) => enqueueUser(queue, member.id)[0])
         );
     }
   };

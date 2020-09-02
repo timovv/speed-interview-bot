@@ -84,7 +84,7 @@ const cancelCommand: Command = async (args, msg) => {
 };
 
 const clearHistoryCommand: Command = async (args, msg) => {
-  updateQueue(msg.guild, clearHistory(getQueue(msg.guild)));
+  updateQueue(msg.guild, (queue) => clearHistory(queue));
   await msg.channel.send("Cleared interviewer ↔ interviewee history mappings.");
 };
 
