@@ -17,7 +17,13 @@ const sendMessage = async (
     await Promise.all(
       members.map(async (member) => {
         const dm = await member.createDM();
-        await dm.send(message);
+        try {
+          await dm.send(message);
+        } catch (e) {
+          console.error(
+            `Could not send a message to ${member.displayName} (id ${member.id}): they might not have DMs enabled for this server.`
+          );
+        }
       })
     );
   } else {
