@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "start": "ts-node src/index.ts"
+  },
   "name": "speed-interview-bot",
   "version": "1.0.0",
   "description": "Bot to manage speed interviews",
