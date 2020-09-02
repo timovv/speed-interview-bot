@@ -42,9 +42,16 @@ export const startBot = async (token: string): Promise<Client> => {
         previous.member ? dequeueUser(queue, previous.member.id) : queue
       );
       const dm = await previous.member.createDM();
-      await dm.send(
-        `You have been removed from the queue. Thanks for coming along!`
-      );
+      if (
+        !(
+          next.channel &&
+          getSettings(next.guild).interviewChannels.includes(next.channel.name)
+        )
+      ) {
+        await dm.send(
+          `You have been removed from the queue. Thanks for coming along!`
+        );
+      }
       return;
     }
   });
